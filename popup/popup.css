@@ -1,0 +1,127 @@
+:root {
+  color-scheme: dark;
+  --bg: #121212;
+  --surface: #1c1c1c;
+  --hover: #262626;
+  --line: #2c2c2c;
+  --text: #eeeeec;
+  --muted: #ababaa;
+  --selected: #dededb;
+  --selected-text: #121212;
+  --danger: #efb2ab;
+  --radius: 10px;
+  --radius-pill: 999px;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  width: 304px;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+button, select, input { font: inherit; }
+button, select { color: inherit; }
+button { cursor: pointer; }
+button:disabled, input:disabled { cursor: default; opacity: .5; }
+:focus-visible { outline: 2px solid var(--selected); outline-offset: 3px; }
+::selection { color: var(--selected-text); background: var(--selected); }
+
+.popup-root { padding: 20px 20px 17px; }
+.header { display: flex; align-items: center; justify-content: space-between; min-height: 30px; }
+.logo { display: flex; align-items: center; gap: 9px; margin: 0; font-size: 17px; line-height: 30px; font-weight: 700; letter-spacing: -.03em; }
+.logo-mark[data-state="on"] { --q-top: #c9f7c0; --q-bottom: #2fbf55; }
+.logo-mark[data-state="auto"] { --q-top: #ffc9c0; --q-bottom: #e5383b; }
+.q-top { stop-color: var(--q-top); }
+.q-bottom { stop-color: var(--q-bottom); }
+.logo-mark { --q-top: #ffffff; --q-bottom: #d2d2d2; width: 26px; height: 26px; flex-shrink: 0; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .5)); }
+.power {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 62px;
+  min-height: 30px;
+  padding: 4px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+.power::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.power:hover { background: var(--hover); color: var(--text); }
+.power.on { background: var(--selected); border-color: var(--selected); color: var(--selected-text); }
+.power.on:hover { background: var(--text); }
+
+.hero { padding: 14px 0 14px; }
+.site {
+  --sq-light: #2a2a2a;
+  --sq-dark: #1a1a1a;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 0 0 12px;
+  padding: 9px 14px;
+  border-radius: var(--radius);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+  color: var(--text);
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  font-weight: 550;
+  letter-spacing: .01em;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, .55);
+}
+.site[data-site="lichess"] { --sq-light: #f0d9b5; --sq-dark: #b58863; }
+.site[data-site="chesscom"] { --sq-light: #eeeed2; --sq-dark: #769656; }
+.site::before,
+.site::after { content: ""; position: absolute; z-index: -1; }
+.site::before {
+  inset: -16px;
+  background: conic-gradient(var(--sq-light) 25%, var(--sq-dark) 0 50%, var(--sq-light) 0 75%, var(--sq-dark) 0) 0 0 / 44px 44px;
+  filter: blur(7px) saturate(.9);
+}
+.site::after {
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10, 10, 10, .6), rgba(10, 10, 10, .38));
+}
+.site[data-site="none"]::after { background: rgba(10, 10, 10, .2); }
+.best { margin: 0; min-height: 36px; font-size: 24px; line-height: 1.5; font-weight: 550; letter-spacing: -.025em; overflow-wrap: anywhere; }
+.meta { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 6px 0 0; color: var(--muted); font-size: 12px; }
+.depth { flex-shrink: 0; }
+#depth-value { margin-left: 4px; color: var(--text); }
+.error { margin: 14px 0 0; padding: 10px 12px; background: var(--surface); border-radius: var(--radius); color: var(--danger); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; user-select: text; }
+
+.settings { padding: 3px 0 0; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) 148px; align-items: center; gap: 12px; min-height: 40px; }
+.row > span, .row > label { color: var(--muted); }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; padding: 3px; border-radius: var(--radius-pill); background: var(--surface); }
+.seg-btn { min-height: 28px; padding: 3px 0; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--muted); font-size: 12px; }
+.seg-btn:hover { background: var(--hover); color: var(--text); }
+.seg-btn.active { background: var(--selected); color: var(--selected-text); font-weight: 600; }
+.arrow-row { cursor: pointer; }
+.check { appearance: none; justify-self: end; position: relative; width: 32px; height: 20px; margin: 0 3px 0 0; border: 1px solid #555555; border-radius: 10px; background: transparent; cursor: pointer; transition: background-color 160ms ease-out; }
+.check::before { content: ""; position: absolute; width: 12px; height: 12px; top: 3px; left: 3px; border-radius: 50%; background: var(--muted); transition: transform 160ms ease-out; }
+.check:checked { background: var(--selected); border-color: var(--selected); }
+.check:checked::before { transform: translateX(12px); background: var(--selected-text); }
+.check:hover { border-color: var(--text); }
+@media (prefers-reduced-motion: reduce) { .check, .check::before { transition: none; } }
+
+.eval-bar { position: relative; height: 24px; margin-top: 14px; overflow: hidden; border: 1px solid #333333; border-radius: var(--radius-pill); background: #0a0a0a; }
+.eval-bar { transition: opacity 160ms ease-out; }
+.eval-bar.stale { opacity: .55; }
+.eval-bar::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(128, 128, 128, .5); }
+.eval-white { display: block; height: 100%; background: var(--text); transition: width 240ms ease-out; }
+.eval-text { position: absolute; top: 0; bottom: 0; display: flex; align-items: center; padding: 0 11px; color: #fff; mix-blend-mode: difference; font-size: 12px; font-weight: 650; line-height: 1; pointer-events: none; }
+.eval-text[data-lead="white"] { left: 0; }
+.eval-text[data-lead="black"] { right: 0; }
+.eval-text[data-lead="even"] { left: 50%; transform: translateX(-50%); }
+@media (prefers-reduced-motion: reduce) { .eval-white, .eval-bar { transition: none; } }
+

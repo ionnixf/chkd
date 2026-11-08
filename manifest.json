@@ -1,0 +1,75 @@
+{
+  "manifest_version": 3,
+  "name": "chkd",
+  "version": "0.1.0",
+  "description": "Local chess analysis powered by Stockfish",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "knight-engine@example.invalid",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  },
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "permissions": [
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.chess.com/*",
+    "https://lichess.org/*"
+  ],
+  "background": {
+    "scripts": [
+      "vendor/chess-rules.iife.js",
+      "content/position.js",
+      "background/config.js",
+      "background/engine.js",
+      "background/sessions.js",
+      "background/autoplay.js",
+      "background/background.js"
+    ]
+  },
+  "action": {
+    "default_title": "chkd",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://lichess.org/*"
+      ],
+      "js": [
+        "content/lichess-bridge.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://www.chess.com/*",
+        "https://lichess.org/*"
+      ],
+      "js": [
+        "vendor/chess-rules.iife.js",
+        "content/adapters/chesscom.js",
+        "content/adapters/lichess.js",
+        "content/position.js",
+        "content/overlay.js",
+        "content/content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; worker-src 'self';"
+  }
+}
